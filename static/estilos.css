@@ -1,0 +1,26 @@
+.evento {
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 5px;
+}
+
+.evento:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    transform: scale(1.02);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.evento + .evento {
+    border-top: 5px solid #eee; /* Añade un borde superior a cada evento excepto al primero */
+}
+
+.evento:nth-child(odd) {
+    background-color: #f8f8f8;
+}
+
+.evento:nth-child(even) {
+    background-color: #e8e8e8;
+}
