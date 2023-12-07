@@ -1,7 +1,10 @@
 <body>
     <div class="col-md-6 offset-md-3 evento">
     <h1>Eventos Registrados</h1>
+    {% if eventos %}
     {% for evento in eventos %}
+    <br>
+    <br>
     <ol class="list-group list-group-numbered">
  <li class="list-group-item d-flex justify-content-between align-items-start">
         <div class="ms-2 me-auto">
@@ -52,8 +55,20 @@
         </div>
         <span class="badge bg-primary rounded-pill"></span>
       </li>
+      <!-- Botones de Edición y Borrado -->
+      <div>
+        <!-- Botón de Borrado -->
+        <form action="{{ url_for('delete_evento', id=evento.id) }}" method="post" onsubmit="return confirm('¿Estás seguro de que quieres borrar este evento?');">
+            <button  class="btn btn-warning" type="submit">Borrar</button>
+        </form>
+    </div>
     </ol>
+    <br>
+    <br>
     {% endfor %}
+    {% else %}
+    <p>No hay eventos para mostrar.</p>
+{% endif %}
   </div>
 </div>
   {% include 'footer.html' %}
