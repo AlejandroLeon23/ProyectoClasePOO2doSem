@@ -4,8 +4,15 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@localhost/creaciones'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://aleonlomeli:EnsenadaITE2023@aleonlomeli.mysql.pythonanywhere-services.com/aleonlomeli$creaciones'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@localhost/creaciones'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_POOL_RECYCLE'] = 7200
+
+SQLALCHEMY_ENGINE_OPTIONS = {
+    'pool_recycle': 280,
+    'pool_pre_ping': True
+}
 
 db = SQLAlchemy(app)
 
@@ -45,6 +52,9 @@ def registro():
             calle=request.form['calle'],
             numero=request.form['numero']
             )
+            db.session.add(nuevo_evento)
+        # Comprometer la transacción
+            db.session.commit()
     return render_template('registro.html')
 
 # Añade otras rutas según sea necesario
@@ -67,7 +77,7 @@ def mostrar_eventos_politicos():
 @app.route('/eventos/musicales')
 def mostrar_eventos_musicales():
     eventos_musicales = Eventos.query.filter_by(tipo_evento='Musical').all()
-    return render_template('eventomusical.html', eventos=eventos_musicales)
+    return render_template('evento.html', eventos=eventos_musicales)
 
 @app.route('/delete_evento/<int:id>', methods=['POST'])
 def delete_evento(id):
