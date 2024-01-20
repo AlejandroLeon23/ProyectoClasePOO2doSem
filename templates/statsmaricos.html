@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Estadísticas de Jugadores LoL</title>
+    <script src="https://unpkg.com/htmx.org"></script>
+</head>
+<body>
+    <h1>Estadísticas de Jugadores de LoL</h1>
+
+    <button hx-get="/player-stats" hx-trigger="click" hx-target="#stats-table" hx-swap="outerHTML">
+        Cargar Estadísticas de Jugadores
+    </button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre del Invocador</th>
+                <th>Victorias</th>
+                <th>Derrotas</th>
+                <th>Rango Actual</th>
+            </tr>
+        </thead>
+        <tbody id="stats-table">
+            <!-- Los datos se cargarán aquí -->
+        </tbody>
+    </table>
+</body>
+</html>

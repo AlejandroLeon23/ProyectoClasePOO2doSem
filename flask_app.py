@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+import requests
 
 ##Iniciamos con el framework de flask, para hacer páginas web en python con su  backend lite.
 app = Flask(__name__)
@@ -98,6 +99,32 @@ def delete_evento(id):
     db.session.delete(evento)
     db.session.commit()
     return redirect(url_for('index'))
+
+@app.route('/statsmaricos')
+def statsmaricos():
+    return render_template('statsmaricos.html')
+
+@app.route('/player-stats')
+def player_stats():
+    api_key = 'RGAPI-da78d03d-0a0b-4020-b2ce-bc15bb97ab6e'
+    summoner_names = ['Faenorr']
+    region = 'NA1'
+    player_stats = []
+
+    for name in summoner_names:
+        summoner_url = f'https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key={api_key}'
+        response = requests.get(summoner_url)
+        if response.status_code == 200:
+            summoner_info = response.json()
+            # Aquí se puede agregar lógica adicional para obtener estadísticas como victorias/derrotas/rango
+            player_stats.append(summoner_info)
+        else:
+            print(f"Error al obtener información de {name}")
+    
+    # Renderizar solo las filas de la tabla
+    return render_template('player_stats_rows.html', players=player_stats)
+
+
 #Cierre app flask con su debug true para que muestre los errores comunes
 if __name__ == '__main__':
     app.run(debug=True)

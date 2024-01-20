@@ -1,0 +1,9 @@
+<!-- player_stats_rows.html -->
+{% for player in players %}
+<tr>
+    <td>{{ player['name'] }}</td>
+    <td>{{ player['wins'] }}</td> <!-- Asegúrate de ajustar estos campos según los datos reales -->
+    <td>{{ player['losses'] }}</td>
+    <td>{{ player['rank'] }}</td>
+</tr>
+{% endfor %}
